@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        tools:context=".ui.AddReminderActivity">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue_main"
+            android:fontFamily="@font/avenirltstd_bold"
+            android:padding="20dp"
+            android:text="@string/add_task"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#BFBBBB"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_grey_border"
+            app:layout_constraintTop_toBottomOf="@id/line">
+
+            <EditText
+                android:id="@+id/edtSearchAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/title_color"
+                android:fontFamily="@font/avenirltstd_light"
+                android:hint="@string/search_address_here"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_text_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAddresses"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/btnDone"
+            app:layout_constraintTop_toBottomOf="@id/clSearch"
+            app:layout_constraintVertical_bias="0"
+            tools:listitem="@layout/item_address" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/ic_baseline_location_searching_24"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/clSearch"
+            app:layout_constraintTop_toBottomOf="@id/clSearch"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/avenirltstd_light"
+            android:padding="10dp"
+            android:text="@string/fetch_current_location_from_gps"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+
+        <TextView
+            android:id="@+id/txtNotificationIfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:text="@string/_1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n"
+            android:textColor="@color/title_color"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/btnDone"
+            app:layout_constraintTop_toBottomOf="@+id/txtTime"
+            app:layout_constraintVertical_bias="0"
+            tools:layout_editor_absoluteX="20dp" />
+
+        <TextView
+            android:id="@+id/txtLocationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/avenirltstd_bold"
+            android:text="@string/address"
+            android:textColor="@color/blue_main"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+        <TextView
+            android:id="@+id/txtLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:textColor="@color/title_color"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/txtLocationLabel"
+            tools:text="Rajapuri, Uttam Nagar, New Delhi" />
+
+        <TextView
+            android:id="@+id/txtAddressNotAccurate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:text="@string/the_flat_house_no_may_or_may_not_be_accurate_but_coordinates_are_accurate"
+            android:textColor="@color/title_color"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/txtLocation" />
+
+        <TextView
+            android:id="@+id/txtSoundLabl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/avenirltstd_bold"
+            android:text="@string/sound_mode"
+            android:textColor="@color/blue_main"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtAddressNotAccurate" />
+
+
+        <LinearLayout
+            android:id="@+id/llSoundModes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/txtSoundLabl">
+
+            <TextView
+                android:id="@+id/txtSound"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_selected"
+                android:fontFamily="@font/avenirltstd_light"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/sound"
+                android:textColor="@color/white"
+                app:drawableStartCompat="@drawable/ic_baseline_volume_up_24"
+                app:drawableTint="@color/white" />
+
+            <TextView
+                android:id="@+id/txtVibrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_unselected"
+                android:fontFamily="@font/avenirltstd_light"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/vibrate"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_baseline_vibration_24"
+                app:drawableTint="@color/black" />
+
+            <TextView
+                android:id="@+id/txtMute"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_unselected"
+                android:fontFamily="@font/avenirltstd_light"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/mute"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_baseline_volume_off_24"
+                app:drawableTint="@color/black" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtCurrentSoundMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:text="@string/your_device_is_currently_on_x_mode"
+            android:textColor="@color/title_color"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/llSoundModes" />
+
+        <TextView
+            android:id="@+id/txtTimeInterval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/avenirltstd_bold"
+            android:text="@string/update_location_in_every"
+            android:textColor="@color/blue_main"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDistance" />
+
+        <TextView
+            android:id="@+id/txtDistanceInterval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/avenirltstd_bold"
+            android:text="@string/distance_from_location"
+            android:textColor="@color/blue_main"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCurrentSoundMode" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:gravity="center_vertical"
+             android:textColor="@color/black"
+            android:textSize="20sp"
+            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            app:drawableTint="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/txtTimeInterval"
+            app:layout_constraintStart_toStartOf="@+id/txtTimeInterval"
+            app:layout_constraintTop_toBottomOf="@+id/txtTimeInterval" />
+
+        <TextView
+            android:id="@+id/btnDone"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_blue_rounded"
+            android:fontFamily="@font/avenirltstd_medium"
+            android:gravity="center"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txtDistance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/avenirltstd_light"
+            android:gravity="center_vertical"
+             android:textColor="@color/black"
+            android:textSize="20sp"
+            app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
+            app:drawableTint="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/txtDistanceInterval"
+            app:layout_constraintStart_toStartOf="@+id/txtDistanceInterval"
+            app:layout_constraintTop_toBottomOf="@+id/txtDistanceInterval" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

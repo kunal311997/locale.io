@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Locale.io</string>
+    <string name="tag_line">Let\'s control sound</string>
+    <string name="hi_welcome_to_sound_io">Hi, Welcome to Locale.io</string>
+    <string name="select_your_desired_location">Select your desired location</string>
+    <string name="choose_your_required_sound_mode">Choose your required sound mode and Save</string>
+    <string name="sound_mode_will_change_automatically_whenever_you_are_around_your_selected_location">Sound mode will change automatically whenever you are around your selected location</string>
+    <string name="let_s_go">Let\'s Go</string>
+    <string name="no_task_added">No Task Added.</string>
+    <string name="you_can_add_a_task_by_clicking_button_below">You can add a task by clicking "+" button below.</string>
+    <string name="delete">Delete</string>
+    <string name="pause">Pause</string>
+    <string name="created_at">Created at : %s</string>
+    <string name="whenever_you_are_within_x_meters_of">whenever you are within %s meters of</string>
+    <string name="sound_mode_will_be_changed_to">Sound Mode will be changed to</string>
+    <string name="location_will_update_every_x_seconds">Location will update every %s seconds</string>
+    <string name="add_task">Add Task</string>
+    <string name="search_address_here">Search Address here</string>
+    <string name="fetch_current_location_from_gps">Fetch current location from GPS</string>
+    <string name="_1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n">1. You will be notified whenever the selected location is within %s metres. <br /> 2. The location will be updated after every %s seconds.</string>
+    <string name="address">Address</string>
+    <string name="the_flat_house_no_may_or_may_not_be_accurate_but_coordinates_are_accurate">The flat/house no. may or may not be accurate, but coordinates are accurate.</string>
+    <string name="sound_mode">Sound Mode</string>
+    <string name="sound">Sound</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="mute">Mute</string>
+    <string name="your_device_is_currently_on_x_mode">Your device is currently on %s mode.</string>
+    <string name="update_location_in_every">Update Location in every (seconds)</string>
+    <string name="distance_from_location">Distance from location (metres)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

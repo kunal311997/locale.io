@@ -1,26 +1,36 @@
-package com.location.reminder.sound.ui
+package com.location.reminder.sound.ui.fragment
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.location.reminder.sound.*
-import com.location.reminder.sound.util.Constants
-import com.location.reminder.sound.util.SharedPrefClient
+import com.location.reminder.sound.ui.AddReminderActivity
+import com.location.reminder.sound.util.*
+import com.location.reminder.sound.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var navController: NavController
+
+    private val viewModel: HomeViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +68,8 @@ class HomeFragment : Fragment() {
                 }
             }
     }*/
-
-    private lateinit var sharedPrefClient: SharedPrefClient
+    @Inject
+    lateinit var sharedPrefClient: SharedPrefClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +77,12 @@ class HomeFragment : Fragment() {
         setDataToUI()
         addOnClickListeners()
         navController = Navigation.findNavController(view)
-     }
+        Log.e("Home", "onViewCreated: " + viewModel.getAddress())
+
+        viewModel.itemSelectedEvent.observe(requireActivity(), Observer {
+
+        })
+    }
 
     override fun onResume() {
         super.onResume()
@@ -85,8 +100,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSharedPref() {
-        sharedPrefClient = SharedPrefClient()
-        sharedPrefClient.init(requireContext())
+        /*sharedPrefClient = SharedPrefClient()
+        sharedPrefClient.init(requireContext())*/
     }
 
     private fun addOnClickListeners() {

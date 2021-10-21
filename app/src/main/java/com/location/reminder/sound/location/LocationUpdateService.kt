@@ -12,10 +12,10 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.location.reminder.sound.R
-import com.location.reminder.sound.distanceBetweenTwoPoints
+import com.location.reminder.sound.util.distanceBetweenTwoPoints
 import com.location.reminder.sound.model.LocationData
-import com.location.reminder.sound.roundOffDouble2Places
-import com.location.reminder.sound.toggleSoundMode
+import com.location.reminder.sound.util.roundOffDouble2Places
+import com.location.reminder.sound.util.toggleSoundMode
 import com.location.reminder.sound.util.SharedPrefClient
 
 class LocationUpdateService : Service() {
@@ -35,8 +35,8 @@ class LocationUpdateService : Service() {
     }
 
     private fun initSharedPrefClient() {
-        sharedPrefClient = SharedPrefClient()
-        sharedPrefClient.init(this)
+       /* sharedPrefClient = SharedPrefClient()
+        sharedPrefClient.init(this)*/
     }
 
     private fun initLocationClient() {

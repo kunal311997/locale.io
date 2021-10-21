@@ -1,4 +1,4 @@
-package com.location.reminder.sound
+package com.location.reminder.sound.util
 
 import android.app.Activity
 import android.app.NotificationManager
@@ -10,7 +10,6 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.location.Geocoder
 import android.media.AudioManager
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -20,8 +19,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.SphericalUtil
+import com.location.reminder.sound.R
 import com.location.reminder.sound.location.LocationUpdateService
-import com.location.reminder.sound.util.Constants
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat

@@ -5,8 +5,6 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.Settings
@@ -19,14 +17,12 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.maps.android.SphericalUtil
 import com.location.reminder.sound.*
 import com.location.reminder.sound.location.LocationClientUtil
 import com.location.reminder.sound.location.MyBroadcastReceiver
@@ -35,16 +31,13 @@ import com.location.reminder.sound.model.LocationData
 import com.location.reminder.sound.model.PlacesDetailsResponse
 import com.location.reminder.sound.network.MyApi
 import com.location.reminder.sound.network.RetrofitUtil
-import com.location.reminder.sound.util.Constants
-import com.location.reminder.sound.util.SharedPrefClient
+import com.location.reminder.sound.util.*
 import kotlinx.android.synthetic.main.activity_add_reminder.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.sqrt
 
 
 class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClientUtilListener,
@@ -91,8 +84,8 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     }
 
     private fun initSharedPrefClient() {
-        sharedPrefClient = SharedPrefClient()
-        sharedPrefClient.init(this)
+        /*sharedPrefClient = SharedPrefClient()
+        sharedPrefClient.init(this)*/
     }
 
     private fun initRetrofit() {

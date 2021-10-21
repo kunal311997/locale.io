@@ -3,14 +3,11 @@ package com.location.reminder.sound.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import javax.inject.Inject
 
-class SharedPrefClient {
+class SharedPrefClient @Inject constructor(val context: Context) {
 
-    lateinit var sharedPreferences: SharedPreferences
-
-    fun init(context: Context) {
-        sharedPreferences = context.getSharedPreferences("TCPPreference", Context.MODE_PRIVATE)
-    }
+    var sharedPreferences: SharedPreferences = context.getSharedPreferences("TCPPreference", Context.MODE_PRIVATE)
 
     fun clearData() {
         sharedPreferences.edit(commit = true) {

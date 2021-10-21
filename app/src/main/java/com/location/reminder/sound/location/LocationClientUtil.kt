@@ -8,10 +8,10 @@ import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import com.location.reminder.sound.isPermissionGranted
+import com.location.reminder.sound.util.isPermissionGranted
 import com.location.reminder.sound.model.LocationData
 
-class LocationClientUtil(
+class LocationClientUtil constructor(
     private val context: Context,
     private val updateTime: Int,
     private val listener: LocationClientUtilListener

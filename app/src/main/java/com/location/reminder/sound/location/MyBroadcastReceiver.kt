@@ -8,7 +8,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.location.reminder.sound.ui.AddReminderActivity
-import com.location.reminder.sound.ui.HomeActivity
+import com.location.reminder.sound.ui.activity.HomeActivity
 import com.location.reminder.sound.util.Constants
 import com.location.reminder.sound.util.SharedPrefClient
 
@@ -31,10 +31,10 @@ class MyBroadcastReceiver : BroadcastReceiver() {
                 .addNextIntent(reminderIntent)
                 .startActivities()
         } else {
-            sharedPrefClient = SharedPrefClient()
+          //  sharedPrefClient = SharedPrefClient()
             p0?.let { context ->
-                sharedPrefClient.init(p0)
-                sharedPrefClient.clearData()
+                /*sharedPrefClient.init(p0)
+                sharedPrefClient.clearData()*/
                 val serviceIntent = Intent(p0, LocationUpdateService::class.java)
                 context.stopService(serviceIntent)
                 NotificationManagerCompat.from(context).cancelAll()

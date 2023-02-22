@@ -8,7 +8,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.location.reminder.sound.ui.AddReminderActivity
-import com.location.reminder.sound.ui.activity.HomeActivity
+import com.location.reminder.sound.finalCode.ui.activities.HomeActivity
 import com.location.reminder.sound.util.Constants
 import com.location.reminder.sound.util.SharedPrefClient
 

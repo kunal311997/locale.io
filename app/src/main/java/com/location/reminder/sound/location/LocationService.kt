@@ -79,7 +79,7 @@ class LocationService : Service() {
                 locationResult
                 Log.e(
                     TAG,
-                    "onLocationResult: lastlocation ${locationResult.lastLocation.latitude}, ${locationResult.lastLocation.longitude}"
+                    "onLocationResult: lastlocation ${locationResult.lastLocation?.latitude}, ${locationResult.lastLocation?.longitude}"
                 )
 
                 val distance = distance(
@@ -186,7 +186,7 @@ class LocationService : Service() {
         }
         mFusedLocationClient?.requestLocationUpdates(
             locationRequest,
-            mLocationCallback,
+            mLocationCallback!!,
             Looper.getMainLooper()
         )
 

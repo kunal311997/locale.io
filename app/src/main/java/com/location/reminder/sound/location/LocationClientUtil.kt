@@ -70,7 +70,7 @@ class LocationClientUtil constructor(
             context.isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
         ) {
             locationClient?.requestLocationUpdates(
-                locationRequest, locationCallback, Looper.getMainLooper()
+                locationRequest, locationCallback!!, Looper.getMainLooper()
             )
         }
     }
@@ -78,8 +78,8 @@ class LocationClientUtil constructor(
     private fun initLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                lastLocation.latitude = locationResult.lastLocation.latitude
-                lastLocation.longitude = locationResult.lastLocation.longitude
+                lastLocation.latitude = locationResult.lastLocation?.latitude
+                lastLocation.longitude = locationResult.lastLocation?.longitude
                 listener.onLocationFetched(lastLocation)
             }
 
@@ -109,7 +109,7 @@ class LocationClientUtil constructor(
     }
 
     fun removeLocationUpdates() {
-        locationClient?.removeLocationUpdates(locationCallback)
+        locationClient?.removeLocationUpdates(locationCallback!!)
     }
 
     interface LocationClientUtilListener {

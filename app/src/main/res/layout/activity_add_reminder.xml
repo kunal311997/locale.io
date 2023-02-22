@@ -139,13 +139,11 @@
 
         <TextView
             android:id="@+id/txtLocation"
+            style="@style/bodyLightLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/avenirltstd_light"
-            android:textColor="@color/title_color"
-            android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/txtLocationLabel"
             tools:text="Rajapuri, Uttam Nagar, New Delhi" />
 
@@ -272,7 +270,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/avenirltstd_light"
             android:gravity="center_vertical"
-             android:textColor="@color/black"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
             app:drawableTint="@color/black"
@@ -300,7 +298,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/avenirltstd_light"
             android:gravity="center_vertical"
-             android:textColor="@color/black"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
             app:drawableTint="@color/black"

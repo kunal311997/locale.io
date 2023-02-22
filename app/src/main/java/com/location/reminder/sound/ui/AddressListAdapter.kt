@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.location.reminder.sound.R
 import com.location.reminder.sound.model.AddressListModel
-import kotlinx.android.synthetic.main.item_address.view.*
 
 class AddressListAdapter(
     private val list: ArrayList<AddressListModel>,
@@ -16,8 +15,8 @@ class AddressListAdapter(
 
     inner class AddressViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(position: Int) {
-            view.txtAddress.text = list[position].placeName
-            view.txtSubAddress.text = list[position].placeDescription
+//            view.txtAddress.text = list[position].placeName
+//            view.txtSubAddress.text = list[position].placeDescription
         }
     }
 

@@ -1,9 +1,9 @@
-package com.location.reminder.sound.viewmodel
+package com.location.reminder.sound.finalCode.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.datatransport.Event
-import com.location.reminder.sound.repository.HomeRepository
+import com.location.reminder.sound.finalCode.repositories.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,4 +17,11 @@ class HomeViewModel @Inject constructor(
     fun getAddress(): String {
         return repository.getAddress()
     }
+
+    fun completeWalkThrough() {
+        repository.completeWalkThrough()
+    }
+
+    fun isWalkThroughCompleted() = repository.isWalkThroughCompleted()
+
 }

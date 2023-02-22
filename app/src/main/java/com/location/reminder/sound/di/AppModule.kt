@@ -1,10 +1,9 @@
 package com.location.reminder.sound.di
 
 import android.content.Context
-import com.location.reminder.sound.repository.HomeRepository
-import com.location.reminder.sound.repository.HomeRepositoryImpl
+import com.location.reminder.sound.finalCode.repositories.HomeRepository
+import com.location.reminder.sound.finalCode.repositories.HomeRepositoryImpl
 import com.location.reminder.sound.util.SharedPrefClient
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

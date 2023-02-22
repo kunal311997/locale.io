@@ -3,30 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/welcomeFragment">
 
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.location.reminder.sound.ui.fragment.SplashFragment"
-        android:label="activity_splash"
-        tools:layout="@layout/fragment_splash">
-
-        <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_splashFragment_to_welcomeFragment"
-            app:destination="@id/welcomeFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.location.reminder.sound.ui.fragment.WelcomeFragment"
+        android:name="com.location.reminder.sound.finalCode.ui.fragments.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -44,6 +26,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newTaskFragmentDialog"
+            app:destination="@id/newTaskFragmentDialog" />
     </fragment>
 
     <fragment
@@ -51,5 +36,9 @@
         android:name="com.location.reminder.sound.ui.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" />
+    <dialog
+        android:id="@+id/newTaskFragmentDialog"
+        android:name="com.location.reminder.sound.ui.fragment.NewTaskFragmentDialog"
+        android:label="NewTaskFragmentDialog" />
 
 </navigation>

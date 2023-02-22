@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 class SharedPrefClient @Inject constructor(val context: Context) {
 
-    var sharedPreferences: SharedPreferences = context.getSharedPreferences("TCPPreference", Context.MODE_PRIVATE)
+    var sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("TCPPreference", Context.MODE_PRIVATE)
 
     fun clearData() {
         sharedPreferences.edit(commit = true) {
@@ -25,13 +26,13 @@ class SharedPrefClient @Inject constructor(val context: Context) {
 
     private val WALK_THROUGH_DONE = "walk_through_done"
 
-    fun updateWalkThroughDone(data: Boolean) {
+    fun completeWalkThrough() {
         sharedPreferences.edit(commit = true) {
-            putBoolean(WALK_THROUGH_DONE, data)
+            putBoolean(WALK_THROUGH_DONE, true)
         }
     }
 
-    fun isWalkThroughDone(): Boolean {
+    fun isWalkThroughCompleted(): Boolean {
         return sharedPreferences.getBoolean(WALK_THROUGH_DONE, false)
     }
 

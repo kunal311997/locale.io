@@ -1,5 +1,8 @@
 package com.location.reminder.sound.util
 
+import com.location.reminder.sound.finalCode.model.TabItem
+import com.location.reminder.sound.finalCode.ui.fragments.RemindersFragment
+
 object Constants {
     const val SPLASH_SCREEN_TIMEOUT: Long = 3000
 
@@ -11,8 +14,14 @@ object Constants {
     const val SQRT_TWO = 2.0
 
     const val GOOGLE_DETAIL_URL = "https://maps.googleapis.com/maps/api/place/details/json"
-    
+
     const val IS_FROM_RECEIVER = "isFromReceiver"
-    const val IS_FROM_EDIT= "isFromEdit"
+    const val IS_FROM_EDIT = "isFromEdit"
+    const val ADD_NEW_TASK_FRAGMENT = "ADD_NEW_TASK_FRAGMENT"
+    val tabList =
+        arrayOf(
+            TabItem("Reminders", RemindersFragment()),
+            TabItem("Settings", RemindersFragment())
+        )
 
 }

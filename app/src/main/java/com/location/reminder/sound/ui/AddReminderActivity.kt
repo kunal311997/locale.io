@@ -32,8 +32,7 @@ import com.location.reminder.sound.model.PlacesDetailsResponse
 import com.location.reminder.sound.network.MyApi
 import com.location.reminder.sound.network.RetrofitUtil
 import com.location.reminder.sound.util.*
-import kotlinx.android.synthetic.main.activity_add_reminder.*
-import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -101,7 +100,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     }
 
     private fun addTextWatchers() {
-        edtSearchAddress.addTextChangedListener {
+       /* edtSearchAddress.addTextChangedListener {
             addressList.clear()
             if (it?.length ?: 0 > 2) {
                 rvAddresses.visible()
@@ -110,12 +109,12 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
                 rvAddresses.gone()
                 addressListAdapter.notifyDataSetChanged()
             }
-        }
+        }*/
     }
 
     private fun setAdapter() {
-        addressListAdapter = AddressListAdapter(addressList, this)
-        rvAddresses.adapter = addressListAdapter
+      /*  addressListAdapter = AddressListAdapter(addressList, this)
+        rvAddresses.adapter = addressListAdapter*/
     }
 
     private fun checkLocationPermissions() {
@@ -197,7 +196,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     }
 
     private fun addOnClickListeners() {
-        imageView2.setOnClickListener {
+       /* imageView2.setOnClickListener {
             checkLocationPermissions()
         }
 
@@ -227,11 +226,11 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
 
         txtMute.setOnClickListener {
             changeMuteColor()
-        }
+        }*/
     }
 
     private fun changeMuteColor() {
-        txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
+        /*txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtVibrate.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtMute.background = ContextCompat.getDrawable(this, R.drawable.bg_selected)
         txtSound.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -240,11 +239,11 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         selectedSoundMode = resources.getString(R.string.mute)
         setTextViewDrawableColor(txtSound, R.color.black)
         setTextViewDrawableColor(txtVibrate, R.color.black)
-        setTextViewDrawableColor(txtMute, R.color.white)
+        setTextViewDrawableColor(txtMute, R.color.white)*/
     }
 
     private fun changeVibrateColor() {
-        txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
+      /*  txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtVibrate.background = ContextCompat.getDrawable(this, R.drawable.bg_selected)
         txtMute.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtSound.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -253,11 +252,11 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         selectedSoundMode = resources.getString(R.string.vibrate)
         setTextViewDrawableColor(txtSound, R.color.black)
         setTextViewDrawableColor(txtVibrate, R.color.white)
-        setTextViewDrawableColor(txtMute, R.color.black)
+        setTextViewDrawableColor(txtMute, R.color.black)*/
     }
 
     private fun changeSoundColor() {
-        txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_selected)
+      /*  txtSound.background = ContextCompat.getDrawable(this, R.drawable.bg_selected)
         txtVibrate.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtMute.background = ContextCompat.getDrawable(this, R.drawable.bg_unselected)
         txtSound.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -266,7 +265,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         selectedSoundMode = resources.getString(R.string.sound)
         setTextViewDrawableColor(txtSound, R.color.white)
         setTextViewDrawableColor(txtVibrate, R.color.black)
-        setTextViewDrawableColor(txtMute, R.color.black)
+        setTextViewDrawableColor(txtMute, R.color.black)*/
     }
 
     private fun checkDataAndProceed() {
@@ -284,7 +283,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     }
 
     private fun saveDataToPref() {
-        sharedPrefClient.setAddress(txtLocation.text.toString())
+//        sharedPrefClient.setAddress(txtLocation.text.toString())
         sharedPrefClient.setCreatedAt(getCurrentDate())
         sharedPrefClient.setSoundMode(selectedSoundMode)
         sharedPrefClient.setLatitude(location?.latitude ?: 0.0)
@@ -302,7 +301,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
             resources.getString(R.string.mute) -> changeMuteColor()
         }
         location = LocationData(sharedPrefClient.getLatitude(), sharedPrefClient.getLongitude())
-        txtLocation.text = sharedPrefClient.getAddress()
+      /*  txtLocation.text = sharedPrefClient.getAddress()
 
         txtDistance.text = sharedPrefClient.getDistance().toString()
         selectedDistance = sharedPrefClient.getDistance()
@@ -310,7 +309,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         txtTime.text = sharedPrefClient.getUpdateTime().toString()
         selectedTime = sharedPrefClient.getUpdateTime()
         if (isFromReceiver)
-            checkDataAndProceed()
+            checkDataAndProceed()*/
     }
 
     private fun checkValidations(): Boolean {
@@ -354,7 +353,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         Log.e(TAG, " latitude ${location.latitude} longitude ${location.longitude}")
         Log.e(TAG, "onLocationFetched: $completeAddressString")
         this.location = location
-        txtLocation.text = completeAddressString
+//        txtLocation.text = completeAddressString
     }
 
     override fun onError() {
@@ -399,8 +398,8 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
 
     override fun onItemClick(position: Int) {
         val completeAddressString = addressList[position].placeName
-        txtLocation.text = completeAddressString
-        rvAddresses.gone()
+//        txtLocation.text = completeAddressString
+//        rvAddresses.gone()
         callGetPlaceDetailsApi(addressList[position].placeId)
     }
 
@@ -416,11 +415,11 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         val statusPopupList = ListPopupWindow(this)
         val adapter: ArrayAdapter<*> =
             ArrayAdapter(this, R.layout.item_simple_status, R.id.txtItem, status)
-        statusPopupList.anchorView = txtTime
+//        statusPopupList.anchorView = txtTime
         statusPopupList.setAdapter(adapter)
         statusPopupList.setOnItemClickListener { parent, view, position, id ->
             val item = status[position]
-            txtTime.text = item.toString()
+//            txtTime.text = item.toString()
             selectedTime = item
             setDataToUI()
             statusPopupList.dismiss()
@@ -440,11 +439,11 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
         val statusPopupList = ListPopupWindow(this)
         val adapter: ArrayAdapter<*> =
             ArrayAdapter(this, R.layout.item_simple_status, R.id.txtItem, status)
-        statusPopupList.anchorView = txtDistance
+//        statusPopupList.anchorView = txtDistance
         statusPopupList.setAdapter(adapter)
         statusPopupList.setOnItemClickListener { parent, view, position, id ->
             val item = status[position]
-            txtDistance.text = item.toString()
+//            txtDistance.text = item.toString()
             selectedDistance = item
             setDataToUI()
             statusPopupList.dismiss()
@@ -471,14 +470,14 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
 
     private fun setDataToUI() {
         lastSoundMode = checkSoundMode()
-        txtCurrentSoundMode.text =
+//        txtCurrentSoundMode.t/ext =
             resources.getString(R.string.your_device_is_currently_on_x_mode, lastSoundMode)
-        txtNotificationIfo.text = resources.getString(
-            R.string._1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n,
-            selectedDistance.toString(), selectedTime.toString()
-        )
-        txtDistance.text = selectedDistance.toString()
-        txtTime.text = selectedTime.toString()
+//        txtNotificationIfo.text = resources.getString(
+//            R.string._1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n,
+//            selectedDistance.toString(), selectedTime.toString()
+//        )
+//        txtDistance.text = selectedDistance.toString()
+//        txtTime.text = selectedTime.toString()
     }
 
 }

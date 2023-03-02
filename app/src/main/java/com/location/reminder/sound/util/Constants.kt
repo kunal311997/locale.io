@@ -7,7 +7,6 @@ object Constants {
     const val SPLASH_SCREEN_TIMEOUT: Long = 3000
 
     const val LOCATION_UPDATE_INTERVAL_IN_MILLIS: Long = 10000
-    const val LOCATION_PERMISSIONS_REQUEST_CODE = 100
     const val RADIUS_IN_METERS = 5.0 * 1000.0 // 1 KM = 1000 Meter
     const val SW_HEADING = 225.0
     const val NE_HEADING = 45.0

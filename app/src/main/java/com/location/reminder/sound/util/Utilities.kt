@@ -116,13 +116,13 @@ fun Context.stopLocationUpdateService() {
     stopService(serviceIntent)
 }
 
-fun Context.checkSoundMode(): String {
+fun Context.checkSoundMode(): Pair<String, Int> {
     val profileCheck = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
     return when (profileCheck?.ringerMode) {
-        AudioManager.RINGER_MODE_NORMAL -> resources.getString(R.string.sound)
-        AudioManager.RINGER_MODE_VIBRATE -> resources.getString(R.string.vibrate)
-        AudioManager.RINGER_MODE_SILENT -> resources.getString(R.string.mute)
-        else -> ""
+        AudioManager.RINGER_MODE_NORMAL -> Pair(resources.getString(R.string.sound), 0)
+        AudioManager.RINGER_MODE_VIBRATE -> Pair(resources.getString(R.string.vibrate), 1)
+        AudioManager.RINGER_MODE_SILENT -> Pair(resources.getString(R.string.mute), 2)
+        else -> Pair("", 0)
     }
 }
 

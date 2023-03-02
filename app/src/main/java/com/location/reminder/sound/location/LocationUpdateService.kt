@@ -8,21 +8,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.location.reminder.sound.R
-import com.location.reminder.sound.util.distanceBetweenTwoPoints
-import com.location.reminder.sound.model.LocationData
 import com.location.reminder.sound.util.roundOffDouble2Places
-import com.location.reminder.sound.util.toggleSoundMode
 import com.location.reminder.sound.util.SharedPrefClient
 
 class LocationUpdateService : Service() {
 
     var context: Context = this
     val TAG = "LocationUpdateService"
-    lateinit var locationClientUtil: LocationClientUtil
+    lateinit var locationClientUtil: LocationClient
     private lateinit var sharedPrefClient: SharedPrefClient
     var distanceBetweenTwoPoints = 0.0
 
@@ -40,40 +36,40 @@ class LocationUpdateService : Service() {
     }
 
     private fun initLocationClient() {
-        locationClientUtil =
-            LocationClientUtil(
-                this, sharedPrefClient.getUpdateTime(),
-                object : LocationClientUtil.LocationClientUtilListener {
-                    override fun onLocationFetched(location: LocationData) {
-
-                        Log.e(TAG, "onLocationFetched: " + location.latitude + location.longitude)
-                        val savedLatitude = sharedPrefClient.getLatitude()
-                        val savedLongitude = sharedPrefClient.getLongitude()
-
-                        Log.e(TAG, "savedLocation $savedLatitude , $savedLongitude")
-                        distanceBetweenTwoPoints = distanceBetweenTwoPoints(
-                            location.latitude ?: 0.0, location.longitude ?: 0.0,
-                            savedLatitude, savedLongitude
-                        )
-                        val soundMode = sharedPrefClient.getSoundMode()
-                        val lastSoundMode = sharedPrefClient.getLastSoundMode()
-
-                        Log.e(TAG, "onLocationFetched: $soundMode$lastSoundMode")
-                        if (distanceBetweenTwoPoints < sharedPrefClient.getDistance()) {
-                            context.toggleSoundMode(soundMode)
-                            showLocationReachedNotification()
-                            Log.e(TAG, "onLocationFetched: $distanceBetweenTwoPoints")
-                        } else {
-                            context.toggleSoundMode(lastSoundMode)
-                            showDistanceLeftNotification()
-                            Log.e(TAG, "onLocationFetched: else")
-                        }
-                    }
-
-                    override fun onError() {
-                        Log.e(TAG, "onError: ")
-                    }
-                })
+//        locationClientUtil =
+//            LocationClient(
+//                this,)/* sharedPrefClient.getUpdateTime(),
+//                object : LocationClientUtil.LocationClientUtilListener {
+//                    override fun onLocationFetched(location: LocationData) {
+//
+//                        Log.e(TAG, "onLocationFetched: " + location.latitude + location.longitude)
+//                        val savedLatitude = sharedPrefClient.getLatitude()
+//                        val savedLongitude = sharedPrefClient.getLongitude()
+//
+//                        Log.e(TAG, "savedLocation $savedLatitude , $savedLongitude")
+//                        distanceBetweenTwoPoints = distanceBetweenTwoPoints(
+//                            location.latitude ?: 0.0, location.longitude ?: 0.0,
+//                            savedLatitude, savedLongitude
+//                        )
+//                        val soundMode = sharedPrefClient.getSoundMode()
+//                        val lastSoundMode = sharedPrefClient.getLastSoundMode()
+//
+//                        Log.e(TAG, "onLocationFetched: $soundMode$lastSoundMode")
+//                        if (distanceBetweenTwoPoints < sharedPrefClient.getDistance()) {
+//                            context.toggleSoundMode(soundMode)
+//                            showLocationReachedNotification()
+//                            Log.e(TAG, "onLocationFetched: $distanceBetweenTwoPoints")
+//                        } else {
+//                            context.toggleSoundMode(lastSoundMode)
+//                            showDistanceLeftNotification()
+//                            Log.e(TAG, "onLocationFetched: else")
+//                        }
+//                    }
+//
+//                    override fun onError() {
+//                        Log.e(TAG, "onError: ")
+//                    }
+//                })*/
     }
 
 

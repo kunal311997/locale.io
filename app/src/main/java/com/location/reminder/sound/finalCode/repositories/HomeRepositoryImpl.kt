@@ -7,10 +7,7 @@ class HomeRepositoryImpl @Inject constructor(
     private val sharedPrefClient: SharedPrefClient
 ) : HomeRepository {
 
-    override fun getAddress(): String {
-        return sharedPrefClient.getAddress()
-    }
-
+    override fun getAddress() = sharedPrefClient.getAddress()
     override fun completeWalkThrough() = sharedPrefClient.completeWalkThrough()
     override fun isWalkThroughCompleted() = sharedPrefClient.isWalkThroughCompleted()
 

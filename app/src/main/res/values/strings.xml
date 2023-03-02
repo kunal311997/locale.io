@@ -20,13 +20,12 @@
     <string name="_1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n">1. You will be notified whenever the selected location is within %s metres. <br /> 2. The location will be updated after every %s seconds.</string>
     <string name="address">Address</string>
     <string name="the_flat_house_no_may_or_may_not_be_accurate_but_coordinates_are_accurate">The flat/house no. may or may not be accurate, but coordinates are accurate.</string>
-    <string name="sound_mode">Sound Mode</string>
     <string name="sound">Sound</string>
     <string name="vibrate">Vibrate</string>
     <string name="mute">Mute</string>
     <string name="your_device_is_currently_on_x_mode">Your device is currently on %s mode.</string>
-    <string name="update_location_in_every">Update Location in every (seconds)</string>
-    <string name="distance_from_location">Distance from location (metres)</string>
+    <string name="update_location_in_every">Update Location in every (%s seconds)</string>
+    <string name="distance_from_location">Distance from location (%s metres)</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
@@ -46,4 +45,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="or">OR</string>
+    <string name="title">Title</string>
+    <string name="description_message">Description/Message</string>
+    <string name="change_sound_mode_from">Change Sound Mode from</string>
+    <string name="change_sound_mode_to">Change Sound Mode to</string>
 </resources>

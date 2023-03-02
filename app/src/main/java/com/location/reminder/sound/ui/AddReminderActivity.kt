@@ -14,8 +14,6 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
-import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
@@ -24,7 +22,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.location.reminder.sound.*
-import com.location.reminder.sound.location.LocationClientUtil
+import com.location.reminder.sound.location.LocationClient
 import com.location.reminder.sound.location.MyBroadcastReceiver
 import com.location.reminder.sound.model.AddressListModel
 import com.location.reminder.sound.model.LocationData
@@ -39,7 +37,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClientUtilListener,
+class AddReminderActivity : AppCompatActivity(),
     AddressListAdapter.AddressClickListener {
 
     private var lastSoundMode: String = ""
@@ -152,7 +150,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
                 arrayOf(
                     android.Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION
-                ), Constants.LOCATION_PERMISSIONS_REQUEST_CODE
+                ),100
             )
             dialog.dismiss()
         }
@@ -325,7 +323,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            Constants.LOCATION_PERMISSIONS_REQUEST_CODE -> {
+            100 -> {
                 if (isPermissionGranted(android.Manifest.permission.ACCESS_COARSE_LOCATION) &&
                     isPermissionGranted(android.Manifest.permission.ACCESS_FINE_LOCATION)
                 ) {
@@ -340,14 +338,14 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
 
     private fun fetchLastLocation() {
         showToast("Fetching location.....")
-        val locationClientUtil = LocationClientUtil(this, 10, this)
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(2000)
-            locationClientUtil.removeLocationUpdates()
-        }
+//        val locationClientUtil = LocationClient(this)
+//        CoroutineScope(Dispatchers.IO).launch {
+//            delay(2000)
+//            locationClientUtil.removeLocationUpdates()
+//        }
     }
 
-    override fun onLocationFetched(location: LocationData) {
+      fun onLocationFetched(location: LocationData) {
         val completeAddressString =
             this.getCompleteAddressString(location.latitude ?: 0.0, location.longitude ?: 0.0)
         Log.e(TAG, " latitude ${location.latitude} longitude ${location.longitude}")
@@ -356,7 +354,7 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
 //        txtLocation.text = completeAddressString
     }
 
-    override fun onError() {
+      fun onError() {
         Log.e(TAG, "onError: ")
     }
 
@@ -469,9 +467,9 @@ class AddReminderActivity : AppCompatActivity(), LocationClientUtil.LocationClie
     }
 
     private fun setDataToUI() {
-        lastSoundMode = checkSoundMode()
+        lastSoundMode = checkSoundMode().first
 //        txtCurrentSoundMode.t/ext =
-            resources.getString(R.string.your_device_is_currently_on_x_mode, lastSoundMode)
+//            resources.getString(R.string.your_device_is_currently_on_x_mode, lastSoundMode)
 //        txtNotificationIfo.text = resources.getString(
 //            R.string._1_you_will_be_notified_whenever_the_selected_location_is_within_100_metres_n,
 //            selectedDistance.toString(), selectedTime.toString()

@@ -11,34 +11,40 @@ import com.google.android.gms.location.*
 import com.location.reminder.sound.util.isPermissionGranted
 import kotlinx.coroutines.*
 
-class LocationClient constructor(
+
+interface LocationClient {
+    fun fetchLastLocation()
+    fun startLocationUpdates(updateTime: Int)
+    fun removeLocationUpdates()
+    fun getViewAction(): LiveData<ViewAction>
+}
+
+class LocationClientImpl constructor(
     private val context: Context,
     private val providerClient: FusedLocationProviderClient,
-) {
+) : LocationClient {
     private val _viewAction = MutableLiveData<ViewAction>()
-    fun getViewAction(): LiveData<ViewAction> = _viewAction
+    override fun getViewAction(): LiveData<ViewAction> = _viewAction
 
-    private var updateTime: Int = 10
-    lateinit var locationCallback: LocationCallback
+    private lateinit var locationCallback: LocationCallback
+
 
     init {
         initLocationCallback()
     }
 
-    private fun createLocationRequest(): LocationRequest {
-        val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
-        return LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY, UPDATE_INTERVAL_IN_MILLISECONDS
-        ).build()
-    }
+    private fun getLocationRequest(updateTime: Int) = LocationRequest.Builder(
+        Priority.PRIORITY_HIGH_ACCURACY, (updateTime * 1000).toLong()
+    ).build()
 
     @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
-        if (context.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION) &&
-            context.isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
+    override fun startLocationUpdates(updateTime: Int) {
+        if (context.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION) && context.isPermissionGranted(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         ) {
             providerClient.requestLocationUpdates(
-                createLocationRequest(), locationCallback, Looper.getMainLooper()
+                getLocationRequest(updateTime), locationCallback, Looper.getMainLooper()
             )
         }
     }
@@ -46,20 +52,22 @@ class LocationClient constructor(
     private fun initLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                locationResult.lastLocation?.let { _viewAction.value = ViewAction.OnLocationFetched(it) }
+                locationResult.lastLocation?.let {
+                    _viewAction.value = ViewAction.OnLocationFetched(it)
+                }
             }
         }
     }
 
     @SuppressLint("MissingPermission")
-    fun fetchLastLocation() {
+    override fun fetchLastLocation() {
         try {
             providerClient.lastLocation.apply {
                 addOnFailureListener {
                     _viewAction.value = ViewAction.OnError(it)
                 }
                 addOnSuccessListener {
-                    _viewAction.value = ViewAction.OnLocationFetched(it)
+                    if (it != null) _viewAction.value = ViewAction.OnLocationFetched(it)
                 }
             }
         } catch (unlikely: SecurityException) {
@@ -67,7 +75,7 @@ class LocationClient constructor(
         }
     }
 
-    fun removeLocationUpdates() {
+    override fun removeLocationUpdates() {
         providerClient.removeLocationUpdates(locationCallback)
     }
 }

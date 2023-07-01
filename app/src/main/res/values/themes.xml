@@ -9,6 +9,7 @@
     <!-- Base application theme. -->
     <style name="Theme.BackgroundLocation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/blue_main</item>
+        <item name="colorPrimaryDark">@color/blue_main</item>
     </style>
 
     <style name="searchViewStyle" parent="Widget.AppCompat.SearchView.ActionBar">
@@ -53,5 +54,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="chipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textAppearance">@style/bodyLightMedium</item>
+        <item name="chipBackgroundColor">@color/blue_translucent</item>
+        <item name="chipIconTint">@color/black</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="rippleColor">@color/blue</item>
+    </style>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.location.reminder.sound.util
 
-import com.location.reminder.sound.finalCode.model.TabItem
-import com.location.reminder.sound.finalCode.ui.fragments.RemindersFragment
+import com.location.reminder.sound.ui.fragments.RemindersFragment
 
 object Constants {
     const val SPLASH_SCREEN_TIMEOUT: Long = 3000
@@ -19,8 +18,8 @@ object Constants {
     const val ADD_NEW_TASK_FRAGMENT = "ADD_NEW_TASK_FRAGMENT"
     val tabList =
         arrayOf(
-            TabItem("Reminders", RemindersFragment()),
-            TabItem("Settings", RemindersFragment())
+            Pair("Reminders", RemindersFragment()),
+          //  Pair("Settings", RemindersFragment())
         )
 
 }

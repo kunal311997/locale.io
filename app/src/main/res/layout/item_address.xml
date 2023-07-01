@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="8dp"
-    android:background="@color/white"
     android:padding="8dp">
 
     <ImageView
@@ -23,13 +22,10 @@
 
     <TextView
         android:id="@+id/txtAddress"
+        style="@style/bodyLightMedium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:background="@color/white"
-        android:fontFamily="@font/avenirltstd_light"
-        android:textColor="@color/black"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtSubAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -39,14 +35,12 @@
 
     <TextView
         android:id="@+id/txtSubAddress"
+        style="@style/bodyLightMedium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/avenirltstd_light"
-        android:textColor="@color/grey_opaque"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/txtAddress"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/txtAddress"
         app:layout_constraintTop_toBottomOf="@+id/txtAddress"
         tools:text="My sub address" />

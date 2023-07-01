@@ -1,270 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_light_gradient">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/btnSave"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                style="@style/bodyLightLarge"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="@string/add_task" />
-
-            <ImageView
-                android:id="@+id/imgClose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:padding="10dp"
-                android:src="@drawable/baseline_clear_24"
-                tools:ignore="ContentDescription" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <LinearLayout
-            android:id="@+id/llUseMyCurrentLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_blue"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:src="@drawable/ic_baseline_location_searching_24"
-                app:tint="@color/black"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                style="@style/bodyLightMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="@string/fetch_current_location_from_gps" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:src="@drawable/baseline_arrow_forward_ios_24"
-                app:tint="@color/black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="@color/grey_text_color" />
+                android:layout_height="match_parent"
+                android:padding="20dp">
 
-            <TextView
-                style="@style/bodyLightMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:text="@string/or" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/appBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="@color/grey_text_color" />
-        </LinearLayout>
+                    <TextView
+                        style="@style/bodyBoldLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_task" />
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_grey_border"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search Address"
-            android:theme="@style/searchViewStyle" />
+                    <ImageView
+                        android:id="@+id/imgClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:padding="10dp"
+                        android:src="@drawable/baseline_clear_24"
+                        tools:ignore="ContentDescription" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtAddress"
-                style="@style/bodyLightMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:hint="@string/address" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_light_rounded"
+                    android:focusable="true"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@android:color/transparent"
+                    android:queryHint="Search Address"
+                    android:theme="@style/searchViewStyle"
+                    app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAddresses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/white"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/searchView"
+                    tools:listitem="@layout/item_address" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/bodyLightMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/searchView">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/bodyLightMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/description_message" />
-        </com.google.android.material.textfield.TextInputLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/grey_text_color" />
+
+                        <TextView
+                            style="@style/bodyLightMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginVertical="10dp"
+                            android:text="@string/or" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/grey_text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llUseMyCurrentLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_light_rounded"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_baseline_location_searching_24"
+                            app:tint="@color/black"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            style="@style/bodyLightMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:text="@string/fetch_current_location_from_gps" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:src="@drawable/baseline_arrow_forward_ios_24"
+                            app:tint="@color/black"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_light_rounded">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtAddress"
+                            style="@style/bodyLightMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:enabled="false"
+                            android:hint="@string/address" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_light_rounded">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtTitle"
+                            style="@style/bodyLightMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="@string/title" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_light_rounded">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtDescription"
+                            style="@style/bodyLightMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="@string/description_message" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/txtDistanceLabel"
+                        style="@style/bodyBoldMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/distance_from_location" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarDistance"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:max="25"
+                        android:progressTint="@color/blue_main"
+                        android:thumbTint="@color/blue_main" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkboxSound"
+                        style="@style/bodyLightMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:buttonTint="@color/black"
+                        android:text="@string/do_you_want_to_toggle_change_sound_mode" />
+
+                    <LinearLayout
+                        android:id="@+id/llChips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/chipGroupToTitle"
+                            style="@style/bodyBoldMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/change_sound_mode_to" />
+
+                        <include
+                            android:id="@+id/chipGroupTo"
+                            layout="@layout/chip_group" />
+
+                        <TextView
+                            style="@style/bodyLightMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Your device is currently at Ring Mode. The sound mode will change to silent when you are at Xyz location and it will change back to silent when you are away."
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <TextView
-            style="@style/bodyBoldMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/change_sound_mode_from" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupFrom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:chipSpacingHorizontal="10dp"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:text="@string/sound"
-                app:chipIcon="@drawable/ic_baseline_volume_up_24" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:text="@string/vibrate"
-                app:chipIcon="@drawable/ic_baseline_vibration_24" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:text="@string/mute"
-                app:chipIcon="@drawable/ic_baseline_volume_off_24" />
-        </com.google.android.material.chip.ChipGroup>
-
-        <TextView
-            style="@style/bodyBoldMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/change_sound_mode_to" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:chipSpacingHorizontal="10dp"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sound"
-                app:chipIcon="@drawable/ic_baseline_volume_up_24" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vibrate"
-                app:chipIcon="@drawable/ic_baseline_vibration_24" />
-
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mute"
-                app:chipIcon="@drawable/ic_baseline_volume_off_24" />
-        </com.google.android.material.chip.ChipGroup>
-
-        <TextView
-            android:id="@+id/txtDistanceLabel"
-            style="@style/bodyBoldMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/distance_from_location" />
-
-        <SeekBar
-            android:id="@+id/seekBarTimeInterval"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:max="5" />
-
-        <TextView
-            android:id="@+id/txtTimeIntervalLabel"
-            style="@style/bodyBoldMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/update_location_in_every" />
-
-        <SeekBar
-            android:id="@+id/seekBarDistance"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:max="5" />
-
-
-        <TextView
-            android:id="@+id/btnDone"
+            android:id="@+id/btnSave"
             style="@style/bodyWhiteLightMedium"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_margin="20dp"
             android:layout_marginVertical="20dp"
             android:background="@drawable/bg_blue_rounded"
             android:gravity="center"
-            android:text="Save" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.core.widget.NestedScrollView>
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

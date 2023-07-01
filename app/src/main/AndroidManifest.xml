@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INPUT_METHOD" />
+
 
     <application
         android:name=".BaseApplication"
@@ -16,17 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_white_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BackgroundLocation">
-        <activity
-            android:name=".finalCode.ui.activities.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Splash">
 
-        </activity>
         <activity
-            android:name=".ui.AddReminderActivity"
+            android:name=".ui.activities.AddReminderActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".finalCode.ui.activities.HomeActivity"
+            android:name=".ui.activities.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +39,7 @@
 
          </activity>
         -->
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.activities.MainActivity" />
 
         <service
             android:name=".location.LocationService"
@@ -60,7 +57,7 @@
         </service>
 
         <receiver
-            android:name=".location.MyBroadcastReceiver"
+            android:name=".location.NotificationChangeBroadcastReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

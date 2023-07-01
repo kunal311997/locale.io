@@ -8,37 +8,37 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.location.reminder.sound.finalCode.ui.fragments.WelcomeFragment"
+        android:name="com.location.reminder.sound.ui.fragments.WelcomeFragment"
         android:label="fragment_welcome"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
         tools:layout="@layout/fragment_welcome">
         <action
-            android:id="@+id/action_welcomeFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/welcomeFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_welcomeFragment_to_remindersFragment"
+            app:destination="@id/remindersFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.location.reminder.sound.ui.fragment.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/remindersFragment"
+        android:name="com.location.reminder.sound.ui.fragments.RemindersFragment"
+        android:label="fragment_reminders"
+        tools:layout="@layout/fragment_reminders">
         <action
-            android:id="@+id/action_homeFragment_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
+            android:id="@+id/action_remindersFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_homeFragment_to_newTaskFragmentDialog"
+            android:id="@+id/action_remindersFragment_to_newTaskFragmentDialog"
             app:destination="@id/newTaskFragmentDialog" />
     </fragment>
-
-    <fragment
-        android:id="@+id/addTaskFragment"
-        android:name="com.location.reminder.sound.ui.AddTaskFragment"
-        android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
     <dialog
         android:id="@+id/newTaskFragmentDialog"
-        android:name="com.location.reminder.sound.ui.fragment.NewTaskFragmentDialog"
+        android:name="com.location.reminder.sound.ui.fragments.NewTaskFragmentDialog"
         android:label="NewTaskFragmentDialog" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.location.reminder.sound.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

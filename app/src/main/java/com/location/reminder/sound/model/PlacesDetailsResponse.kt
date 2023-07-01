@@ -77,10 +77,10 @@ data class Geometry(
 data class Location(
 
 	@field:SerializedName("lng")
-	val lng: Double? = null,
+	var lng: Double? = null,
 
 	@field:SerializedName("lat")
-	val lat: Double? = null
+	var lat: Double? = null
 )
 
 data class Southwest(

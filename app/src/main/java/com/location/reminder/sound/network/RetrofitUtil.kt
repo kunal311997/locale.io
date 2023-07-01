@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitUtil {
 
     const val BASE_URL = "https://maps.googleapis.com"
-    var retrofit: Retrofit? = null
+   lateinit var retrofit: Retrofit
     private const val connectTimeUnit = 10L
     private const val readTimeUnit = 40L
     private const val writeTimeUnit = 10L
@@ -25,7 +25,7 @@ object RetrofitUtil {
 
     private val gson = GsonBuilder().setLenient().create()
 
-    fun getInstance(): Retrofit? {
+    fun getInstance(): Retrofit {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))

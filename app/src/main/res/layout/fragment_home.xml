@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".finalCode.ui.activities.HomeActivity">
+    tools:context=".ui.activities.HomeActivity">
 
     <!-- <TextView
          android:id="@+id/txtTitle"
@@ -20,17 +20,18 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/tab_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
+        android:visibility="gone"
         style="@style/bodyWhiteBoldLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue_main"
         android:clipToPadding="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/white"
         app:tabTextAppearance="@style/bodyLightMedium"
         app:tabTextColor="@color/white" />

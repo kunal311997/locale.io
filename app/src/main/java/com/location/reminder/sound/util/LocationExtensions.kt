@@ -12,10 +12,10 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.maps.android.SphericalUtil
 import com.location.reminder.sound.BuildConfig
+import com.location.reminder.sound.model.Location
 import com.location.reminder.sound.model.PlacesDetailsResponse
 import com.location.reminder.sound.network.PlacesApi
-import com.location.reminder.sound.ui.fragments.NewTaskFragmentDialog
-import kotlinx.coroutines.*
+import com.location.reminder.sound.ui.fragments.CreateTaskFragmentDialog
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
@@ -78,7 +78,7 @@ fun milesToMeters(miles: Double): Double {
 
 fun PlacesClient.fetchPlaces(
     searchText: String,
-    location: com.location.reminder.sound.model.Location?,
+    location: Location?,
     callback: (FindAutocompletePredictionsResponse) -> Unit
 ) {
     val latLng = LatLng(location?.lat ?: 0.0, location?.lng ?: 0.0)
@@ -103,16 +103,16 @@ fun PlacesClient.fetchPlaces(
         .addOnFailureListener { exception: Exception -> exception.printStackTrace() }
 }
 
-suspend fun PlacesApi.callGetPlaceDetailsApi(placeId: String?): com.location.reminder.sound.model.Location? {
-    var location: com.location.reminder.sound.model.Location? = null
+suspend fun PlacesApi.callGetPlaceDetailsApi(placeId: String?): Location? {
+    var location: Location? = null
     try {
         val response: PlacesDetailsResponse = this@callGetPlaceDetailsApi.placesDetailAPI(
             Constants.GOOGLE_DETAIL_URL, placeId ?: "", BuildConfig.API_KEY
         )
-        Log.e(NewTaskFragmentDialog.TAG, "getPlaceDetails: $response")
+        Log.e(CreateTaskFragmentDialog.TAG, "getPlaceDetails: $response")
         location = response.result?.geometry?.location
     } catch (e: java.lang.Exception) {
-        Log.e(NewTaskFragmentDialog.TAG, "getPlaceDetails: $e")
+        Log.e(CreateTaskFragmentDialog.TAG, "getPlaceDetails: $e")
     }
     return location
 }

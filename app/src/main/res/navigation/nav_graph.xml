@@ -20,9 +20,10 @@
 
     <fragment
         android:id="@+id/remindersFragment"
-        android:name="com.location.reminder.sound.ui.fragments.RemindersFragment"
+        android:name="com.location.reminder.sound.ui.fragments.TasksFragment"
         android:label="fragment_reminders"
-        tools:layout="@layout/fragment_reminders">
+        app:defaultNavHost="true"
+        tools:layout="@layout/fragment_tasks">
         <action
             android:id="@+id/action_remindersFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
@@ -34,7 +35,7 @@
     </fragment>
     <dialog
         android:id="@+id/newTaskFragmentDialog"
-        android:name="com.location.reminder.sound.ui.fragments.NewTaskFragmentDialog"
+        android:name="com.location.reminder.sound.ui.fragments.CreateTaskFragmentDialog"
         android:label="NewTaskFragmentDialog" />
     <fragment
         android:id="@+id/settingsFragment"

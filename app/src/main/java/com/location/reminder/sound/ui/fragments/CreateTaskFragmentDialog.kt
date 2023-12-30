@@ -12,39 +12,52 @@ import android.widget.SearchView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
 import com.location.reminder.sound.R
-import com.location.reminder.sound.databinding.NewTaskDailogFragmentBinding
-import com.location.reminder.sound.model.Task
-import com.location.reminder.sound.viewmodels.HomeViewModel
+import com.location.reminder.sound.databinding.CreateTaskDailogFragmentBinding
 import com.location.reminder.sound.location.LocationClient
 import com.location.reminder.sound.location.ViewAction
+import com.location.reminder.sound.domain.viewmodels.HomeViewModel
 import com.location.reminder.sound.model.AddressListModel
+import com.location.reminder.sound.model.Location
+import com.location.reminder.sound.model.SoundMode
+import com.location.reminder.sound.model.Task
 import com.location.reminder.sound.network.PlacesApi
 import com.location.reminder.sound.ui.adapters.AddressListAdapter
-import com.location.reminder.sound.util.*
+import com.location.reminder.sound.util.callGetPlaceDetailsApi
+import com.location.reminder.sound.util.checkSoundMode
+import com.location.reminder.sound.util.evaluateDistance
+import com.location.reminder.sound.util.fetchPlaces
+import com.location.reminder.sound.util.getCompleteAddressString
+import com.location.reminder.sound.util.gone
+import com.location.reminder.sound.util.isLocationPermissionsGranted
+import com.location.reminder.sound.util.isNotificationAccessGranted
+import com.location.reminder.sound.util.showConfirmationDialog
+import com.location.reminder.sound.util.showLocationPermissionDialog
+import com.location.reminder.sound.util.showNotificationAccessPermissionDialog
+import com.location.reminder.sound.util.showToast
+import com.location.reminder.sound.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDialogFragment() {
+class CreateTaskFragmentDialog(val task: Task = Task(), private val onDismiss: () -> Unit) :
+    BottomSheetDialogFragment() {
 
-    private lateinit var binding: NewTaskDailogFragmentBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var binding: CreateTaskDailogFragmentBinding
+    private val viewModel: HomeViewModel by activityViewModels()
 
     @Inject
     lateinit var locationClient: LocationClient
-    private var currentLocation: com.location.reminder.sound.model.Location? =
-        com.location.reminder.sound.model.Location()
+    private var currentLocation: Location? = Location()
 
     @Inject
     lateinit var placesApi: PlacesApi
@@ -55,46 +68,59 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
     private val addressList: ArrayList<AddressListModel> = arrayListOf()
     private lateinit var addressListAdapter: AddressListAdapter
 
-    private var task = Task()
-
     companion object {
         const val TAG: String = "NewTaskFragmentDialog"
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = BottomSheetDialog(requireContext(), theme)
+        val dialog = BottomSheetDialog(requireActivity(), theme)
         dialog.setOnShowListener {
             val parentLayout =
                 (it as BottomSheetDialog).findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             parentLayout?.let { layout ->
                 val behaviour = BottomSheetBehavior.from(layout)
-                setupFullHeight(layout)
+                val layoutParams = layout.layoutParams
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+                layout.layoutParams = layoutParams
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
         return dialog
     }
 
-    private fun setupFullHeight(bottomSheet: View) {
-        val layoutParams = bottomSheet.layoutParams
-        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
-        bottomSheet.layoutParams = layoutParams
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = NewTaskDailogFragmentBinding.inflate(inflater, container, false)
+        binding = CreateTaskDailogFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setDataForEditMode()
         initOnClickListeners()
         setAdapter()
         initObservers()
         initTextWatchers()
+    }
+
+    private fun setDataForEditMode() {
+        binding.edtTitle.setText(task.title)
+        binding.edtDescription.setText(task.description)
+        binding.edtAddress.setText(task.address)
+        currentLocation?.lat = task.latitude
+        currentLocation?.lng = task.longitude
+        if (task.destinationSoundMode != null) {
+            when (task.destinationSoundMode) {
+                SoundMode.RINGER -> binding.chipGroupTo.chipGroup.check(R.id.ringer)
+                SoundMode.VIBRATE -> binding.chipGroupTo.chipGroup.check(R.id.vibrate)
+                SoundMode.SILENT -> binding.chipGroupTo.chipGroup.check(R.id.silent)
+                else -> {}
+            }
+            binding.checkboxSound.isChecked = true
+            binding.llChips.visible()
+        }
     }
 
     private fun initObservers() {
@@ -111,13 +137,11 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
                         )
                     }
                 }
+
                 is ViewAction.OnError -> {
                     requireActivity().showToast(action.error?.message.toString())
                 }
             }
-        }
-        viewModel.getAddedTasks().observe(this) {
-            requireContext().startLocationUpdateService(it as ArrayList<Task>?)
         }
     }
 
@@ -184,27 +208,34 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
         binding.btnSave.setOnClickListener {
             if (checkValidations()) {
                 if (binding.checkboxSound.isChecked) {
-                    requireActivity().showConfirmationDialog(
-                        task.destinationSoundMode ?: "", task.distance
-                    ) {
-                        saveTask()
+                    task.destinationSoundMode =
+                        when (binding.chipGroupTo.chipGroup.checkedChipId) {
+                            R.id.ringer -> SoundMode.RINGER
+                            R.id.vibrate -> SoundMode.VIBRATE
+                            R.id.silent -> SoundMode.SILENT
+                            else -> null
+                        }
+                    task.destinationSoundMode?.name?.let { it1 ->
+                        requireActivity().showConfirmationDialog(
+                            it1, task.distance
+                        ) {
+                            saveTask()
+                        }
                     }
-                } else
-                    saveTask()
+                } else saveTask()
             }
         }
         binding.imgClose.setOnClickListener {
             dismiss()
         }
-        binding.txtDistanceLabel.text = resources.getString(R.string.distance_from_location, "100")
+        binding.txtDistanceLabel.text =
+            resources.getString(R.string.distance_from_location, "100 metres")
         binding.seekBarDistance.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 task.distance = (p1 + 1) * 100
-                binding.txtDistanceLabel.text =
-                    resources.getString(
-                        R.string.distance_from_location,
-                        ((p1 + 1) * 100.0).evaluateDistance()
-                    )
+                binding.txtDistanceLabel.text = resources.getString(
+                    R.string.distance_from_location, ((p1 + 1) * 100.0).evaluateDistance()
+                )
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -221,37 +252,6 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
                 task.destinationSoundMode = null
             }
         }
-
-        val chipGroupTo = binding.chipGroupTo.chipGroup
-        for (id in chipGroupTo.checkedChipIds) {
-            val chip: Chip = chipGroupTo.findViewById(id)
-            task.destinationSoundMode = chip.text.toString()
-        }
-
-        //  val chipGroupFrom = binding.chipGroupFrom.chipGroup
-        //  (chipGroupFrom[requireContext().checkSoundMode().second] as Chip).isChecked = true
-
-        /*    for (id in chipGroupFrom.checkedChipIds) {
-                val chip: Chip = chipGroupFrom.findViewById(id)
-                task.sourceSoundMode = chip.text.toString()
-            }*/
-        /* binding.txtTimeIntervalLabel.text =
-             resources.getString(R.string.update_location_in_every, "30")
-         binding.seekBarTimeInterval.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                 task.timeInterval = (p1 + 1) * 30;
-                 binding.txtTimeIntervalLabel.text = resources.getString(
-                     R.string.update_location_in_every, task.timeInterval.toString()
-                 )
-             }
-
-             override fun onStartTrackingTouch(p0: SeekBar?) {
-             }
-
-             override fun onStopTrackingTouch(p0: SeekBar?) {
-             }
-         })*/
-
     }
 
     private fun checkLocationPermissions() = when {
@@ -263,6 +263,7 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
                 requestLocationPermissions()
             }
         }
+
         else -> requestLocationPermissions()
     }
 
@@ -275,7 +276,8 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
     private fun requestLocationPermissions() {
         locationRequestPermissionLauncher.launch(
             arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
             )
         )
     }
@@ -295,19 +297,23 @@ class NewTaskFragmentDialog(private val onDismiss: () -> Unit) : BottomSheetDial
             title = binding.edtTitle.text.toString()
             description = binding.edtDescription.text.toString()
             address = binding.edtAddress.text.toString()
-            latitude = currentLocation?.lat
-            longitude = currentLocation?.lng
+            latitude = currentLocation?.lat ?: 0.0
+            longitude = currentLocation?.lng ?: 0.0
+            sourceSoundMode = requireActivity().checkSoundMode()
         }
-        viewModel.saveTask(task)
-        viewModel.fetchAddedTasks()
-        requireContext().showToast("Your task has been successfully added")
-        if (!requireContext().isNotificationAccessGranted()) {
+        if (task.uid == 0) {
+            viewModel.saveTask(task)
+            requireContext().showToast("Your task has been successfully added")
+        } else {
+            viewModel.updateTask(task)
+            requireContext().showToast("Your task has been successfully updated")
+        }
+
+        if (!requireActivity().isNotificationAccessGranted()) {
             requireActivity().showNotificationAccessPermissionDialog()
         }
-        viewModel.fetchAddedTasks()
         onDismiss.invoke()
         dismiss()
-
     }
 
     private fun checkValidations(): Boolean {

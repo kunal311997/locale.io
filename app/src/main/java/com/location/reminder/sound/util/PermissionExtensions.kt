@@ -23,7 +23,6 @@ fun Context.isLocationPermissionsGranted(): Boolean {
             isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)
 }
 
-
 fun Context.isNotificationAccessGranted(): Boolean =
     (applicationContext.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager).isNotificationPolicyAccessGranted
 
@@ -41,8 +40,20 @@ fun Context.showConfirmationDialog(soundMode: String, location: Int?, callback: 
     CustomDialog(
         this,
         title = "Confirmation",
-        subTitle = "Your device is currently at ${this.checkSoundMode().first} Mode. The sound mode will change to $soundMode Mode when you are at location - $location and it will change back to ${this.checkSoundMode().first} when you are away from selected location.",
+        subTitle = "Your device is currently at ${this.checkSoundMode()} Mode. The sound mode will change to $soundMode Mode when you are at location - $location and it will change back to ${this.checkSoundMode()} when you are away from selected location.",
         primaryActionTitle = "Confirm",
+    ) {
+        callback.invoke()
+    }.show()
+}
+
+fun Context.showDeleteConfirmationDialog(callback: () -> Unit) {
+    CustomDialog(
+        this,
+        title = "Confirmation",
+        subTitle = "Are you sure you want to delete?",
+        primaryActionTitle = "Confirm",
+        secondaryActionTitle = "Cancel"
     ) {
         callback.invoke()
     }.show()

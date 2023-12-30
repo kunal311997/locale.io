@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitUtil {
 
-    const val BASE_URL = "https://maps.googleapis.com"
-   lateinit var retrofit: Retrofit
+    private const val BASE_URL = "https://maps.googleapis.com"
+    private lateinit var retrofit: Retrofit
     private const val connectTimeUnit = 10L
     private const val readTimeUnit = 40L
     private const val writeTimeUnit = 10L
 
-    var httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
+    private var httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
         .connectTimeout(connectTimeUnit, TimeUnit.SECONDS)
         .readTimeout(readTimeUnit, TimeUnit.SECONDS)
         .writeTimeout(writeTimeUnit, TimeUnit.SECONDS)

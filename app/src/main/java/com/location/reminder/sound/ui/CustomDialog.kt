@@ -20,7 +20,7 @@ class CustomDialog(
 ) :
     Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dailog_custom)
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

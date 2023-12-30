@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INPUT_METHOD" />
 
-
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -18,34 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_white_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BackgroundLocation">
-
-        <activity
-            android:name=".ui.activities.AddReminderActivity"
-            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activities.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
- <activity
-             android:name=".ui.SplashFragment"
-
-             android:theme="@style/Theme.Splash">
-
-         </activity>
-        -->
-        <activity android:name=".ui.activities.MainActivity" />
-
-        <service
-            android:name=".location.LocationService"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="location" />
         <service
             android:name=".location.LocationUpdateService"
             android:enabled="true"
@@ -55,7 +34,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </service>
-
         <receiver
             android:name=".location.NotificationChangeBroadcastReceiver"
             android:enabled="true"
@@ -65,5 +43,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

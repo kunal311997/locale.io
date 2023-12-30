@@ -190,7 +190,7 @@
                 android:fontFamily="@font/avenirltstd_light"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="@string/ring"
+                android:text="@string/ringer"
                 android:textColor="@color/white"
                 app:drawableStartCompat="@drawable/ic_baseline_volume_up_24"
                 app:drawableTint="@color/white" />

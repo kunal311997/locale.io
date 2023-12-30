@@ -4,16 +4,21 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.location.reminder.sound.model.Task
 
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM task")
-    fun getAll(): List<Task>
+    suspend fun getAll(): List<Task>
 
     @Insert
-    fun insertAll(vararg task: Task)
+    suspend fun insert(vararg task: Task)
 
     @Delete
     fun delete(task: Task)
+
+    @Update
+    fun update(vararg task: Task): Int
+
 }

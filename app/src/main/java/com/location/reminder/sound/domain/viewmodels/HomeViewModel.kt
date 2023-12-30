@@ -1,11 +1,11 @@
-package com.location.reminder.sound.viewmodels
+package com.location.reminder.sound.domain.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.location.reminder.sound.domain.repositories.HomeRepository
 import com.location.reminder.sound.model.Task
-import com.location.reminder.sound.repositories.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,13 +23,25 @@ class HomeViewModel @Inject constructor(
     fun completeWalkThrough() = repository.completeWalkThrough()
 
     fun isWalkThroughCompleted() = repository.isWalkThroughCompleted()
+    fun setUpdateTime(updateTime: Int) = repository.setUpdateTime(updateTime)
+    fun getUpdateTime(): Int = repository.getUpdateTime()
+    fun fetchAddedTasks() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                tasks.postValue(repository.getAddedTasks().reversed())
+            }
+        }
+    }
 
     fun saveTask(task: Task) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 repository.saveTask(task)
+                val newTasks = repository.getAddedTasks().reversed()
+                tasks.postValue(newTasks)
             }
         }
+
     }
 
     fun deleteTask(task: Task) {
@@ -41,12 +53,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchAddedTasks() {
+    fun updateTask(task: Task) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                tasks.postValue(repository.getAddedTasks())
+                repository.updateTask(task)
+                fetchAddedTasks()
             }
         }
     }
+
 
 }

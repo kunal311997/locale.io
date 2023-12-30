@@ -3,34 +3,30 @@ package com.location.reminder.sound.util
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.media.AudioManager
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.location.reminder.sound.R
-import com.location.reminder.sound.model.Task
 import com.location.reminder.sound.location.LocationUpdateService
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import com.location.reminder.sound.model.SoundMode
+import com.location.reminder.sound.model.Task
 
-fun Context.toggleSoundMode(soundMode: String) {
+fun Context.toggleSoundMode(soundMode: SoundMode) {
     val newSoundMode = when (soundMode) {
-        resources.getString(R.string.ring) -> AudioManager.RINGER_MODE_NORMAL
-        resources.getString(R.string.vibrate) -> AudioManager.RINGER_MODE_VIBRATE
-        resources.getString(R.string.silent) -> AudioManager.RINGER_MODE_SILENT
-        else -> 0
+        SoundMode.RINGER -> AudioManager.RINGER_MODE_NORMAL
+        SoundMode.VIBRATE -> AudioManager.RINGER_MODE_VIBRATE
+        SoundMode.SILENT -> AudioManager.RINGER_MODE_SILENT
     }
-    val audioManager: AudioManager =
-        this.getSystemService(Service.AUDIO_SERVICE) as AudioManager
-    audioManager.ringerMode = newSoundMode
+    try {
+        (this.getSystemService(Service.AUDIO_SERVICE) as AudioManager).ringerMode = newSoundMode
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 
-fun Context.startLocationUpdateService(addedTasks: ArrayList<Task>?) {
+fun Context.startLocationUpdateService(addedTasks: ArrayList<Task>?, updateTime: Int) {
     val serviceIntent = Intent(this, LocationUpdateService::class.java)
     serviceIntent.putExtra("tasks", addedTasks)
+    serviceIntent.putExtra("updateTime", updateTime)
     ContextCompat.startForegroundService(this, serviceIntent)
 }
 
@@ -39,33 +35,16 @@ fun Context.stopLocationUpdateService() {
     stopService(serviceIntent)
 }
 
-fun Context.checkSoundMode(): Pair<String, Int> {
+fun Context.checkSoundMode(): SoundMode {
     val profileCheck = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
     return when (profileCheck?.ringerMode) {
-        AudioManager.RINGER_MODE_NORMAL -> Pair(resources.getString(R.string.ring), 0)
-        AudioManager.RINGER_MODE_VIBRATE -> Pair(resources.getString(R.string.vibrate), 1)
-        AudioManager.RINGER_MODE_SILENT -> Pair(resources.getString(R.string.silent), 2)
-        else -> Pair("", 0)
+        AudioManager.RINGER_MODE_NORMAL -> SoundMode.RINGER
+        AudioManager.RINGER_MODE_VIBRATE -> SoundMode.VIBRATE
+        AudioManager.RINGER_MODE_SILENT -> SoundMode.SILENT
+        else -> SoundMode.RINGER
     }
 }
 
-fun setTextViewDrawableColor(textView: TextView, color: Int) {
-    for (drawable in textView.compoundDrawables) {
-        if (drawable != null) {
-            drawable.colorFilter =
-                PorterDuffColorFilter(
-                    ContextCompat.getColor(textView.context, color),
-                    PorterDuff.Mode.SRC_IN
-                )
-        }
-    }
-}
-
-
-fun getCurrentDate(): String {
-    val sdf = SimpleDateFormat("dd-MMM-yyyy hh:mm EEEE", Locale.getDefault())
-    return sdf.format(Date())
-}
 
 fun Double.evaluateDistance(): String {
     val distance = this.toInt()

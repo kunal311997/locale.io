@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/txtTitle"
-            style="@style/bodyLightLarge"
+            style="@style/bodyBoldLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Office" />
@@ -28,13 +28,15 @@
             style="@style/bodyLightMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/grey_text_color"
             tools:text="Inform me when I reach office" />
 
         <TextView
             android:id="@+id/txtAddress"
-            style="@style/bodyBoldMedium"
+            style="@style/bodyLightMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             tools:text="New Delhi, India" />
 
         <TextView
@@ -42,14 +44,25 @@
             style="@style/bodyLightMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:text="Sound to Vibrate" />
+            android:layout_marginTop="2dp"
+            android:textColor="@color/red"
+            android:visibility="visible"
+            tools:text="Vibrate" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            style="@style/bodyLightMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/grey_text_color"
+            tools:text="29th Dec,23" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
         android:id="@+id/imgDelete"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:src="@drawable/icon_delete_outline"
@@ -60,7 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
-
 
 </LinearLayout>
 

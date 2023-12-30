@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_light_gradient"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingHorizontal="20dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgSettings"
+            android:id="@+id/imgBack"
             style="@style/bodyBoldLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/txtTimeIntervalLabel"
-        style="@style/bodyBoldMedium"
+        style="@style/bodyLightMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -52,6 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:max="5"
+
         android:progressTint="@color/blue_main"
         android:thumbTint="@color/blue_main" />
+    <CheckBox
+         style="@style/bodyLightMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Show distance diff notification" />
 </androidx.appcompat.widget.LinearLayoutCompat>

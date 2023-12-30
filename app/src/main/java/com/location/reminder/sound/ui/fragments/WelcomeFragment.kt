@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import com.location.reminder.sound.R
 import com.location.reminder.sound.databinding.FragmentWelcomeBinding
-import com.location.reminder.sound.viewmodels.HomeViewModel
+import com.location.reminder.sound.domain.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

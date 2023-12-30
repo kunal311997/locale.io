@@ -12,8 +12,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
 import com.location.reminder.sound.R
+import com.location.reminder.sound.model.SoundMode
 import com.location.reminder.sound.model.Task
-import com.location.reminder.sound.util.*
+import com.location.reminder.sound.util.checkSoundMode
+import com.location.reminder.sound.util.distanceBetweenTwoPoints
+import com.location.reminder.sound.util.evaluateDistance
+import com.location.reminder.sound.util.toggleSoundMode
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,17 +34,19 @@ class LocationUpdateService : LifecycleService() {
     lateinit var locationClient: LocationClient
 
     private var distanceBetweenTwoPoints = 0.0
-    var tasks: ArrayList<Task>? = null
+    private var tasks: ArrayList<Task>? = null
+    private var updateTime: Int = 0
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         createNotification()
-        getIntentData(intent)
+        getTasksFromIntent(intent)
         initLocationClient()
         return START_REDELIVER_INTENT
     }
 
-    private fun getIntentData(intent: Intent?) {
+    private fun getTasksFromIntent(intent: Intent?) {
+        updateTime = intent?.getIntExtra("updateTime", 15) ?: 15
         tasks = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent?.getSerializableExtra("tasks", ArrayList::class.java) as ArrayList<Task>
         } else {
@@ -49,23 +55,22 @@ class LocationUpdateService : LifecycleService() {
     }
 
     private fun initLocationClient() {
-        locationClient.startLocationUpdates(10)
+        locationClient.startLocationUpdates(updateTime)
         locationClient.getViewAction().observe(this) { action ->
             when (action) {
                 is ViewAction.OnLocationFetched -> {
                     tasks?.forEach {
                         distanceBetweenTwoPoints = distanceBetweenTwoPoints(
                             action.location?.latitude ?: 0.0, action.location?.longitude ?: 0.0,
-                            it.latitude ?: 0.0, it.longitude ?: 0.0
+                            it.latitude, it.longitude
                         )
                         Log.e(TAG, "distanceBetweenTwoPoints: $distanceBetweenTwoPoints")
-                        Log.e(TAG, "distance: ${it.distance}")
-                        if (distanceBetweenTwoPoints <= (it.distance ?: 0)) {
-                            // context.toggleSoundMode(soundMode)
+                         if (distanceBetweenTwoPoints <= it.distance) {
+                            context.toggleSoundMode(it.destinationSoundMode ?: SoundMode.RINGER)
                             showLocationReachedNotification(it)
                             Log.e(TAG, "onLocationFetched: $distanceBetweenTwoPoints")
                         } else {
-                            //  context.toggleSoundMode(lastSoundMode)
+                            context.toggleSoundMode(it.sourceSoundMode)
                             showDistanceLeftNotification(it)
                             Log.e(TAG, "onLocationFetched: else")
                         }
@@ -73,10 +78,12 @@ class LocationUpdateService : LifecycleService() {
                     }
                     action.location?.latitude
                 }
+
                 is ViewAction.OnError -> {
                     Log.e(TAG, "onStartCommand: ViewAction.OnError")
 
                 }
+
                 else -> {
                     Log.e(TAG, "onStartCommand: ViewAction.else")
                 }
@@ -99,10 +106,10 @@ class LocationUpdateService : LifecycleService() {
         }
 
         val soundMessage =
-            if (task.destinationSoundMode != null) "The sound mode has been changed from" +
-                    " ${this.checkSoundMode().first} " +
+            "The sound mode has been changed from" +
+                    " ${this.checkSoundMode()} " +
                     "to ${task.destinationSoundMode}."
-            else ""
+
         val content =
             "You have reached your destination - ${task.address}. $soundMessage"
 
@@ -110,12 +117,14 @@ class LocationUpdateService : LifecycleService() {
             .setSmallIcon(R.drawable.icon_white)
             .setContentTitle(resources.getString(R.string.app_name))
             .setContentText(content)
+            .setSilent(true)
             .setStyle(NotificationCompat.BigTextStyle().bigText(content))
+
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManagerCompat: NotificationManagerCompat =
             NotificationManagerCompat.from(applicationContext)
-        notificationManagerCompat.notify(task.uid ?: 1002, builder.build())
+        notificationManagerCompat.notify(task.uid, builder.build())
     }
 
     @SuppressLint("MissingPermission")
@@ -146,7 +155,7 @@ class LocationUpdateService : LifecycleService() {
 
         val notificationManagerCompat: NotificationManagerCompat =
             NotificationManagerCompat.from(applicationContext)
-        notificationManagerCompat.notify(task.uid ?: 1002, builder.build())
+        notificationManagerCompat.notify(task.uid, builder.build())
     }
 
     private fun createNotification() {

@@ -57,6 +57,7 @@
                     android:iconifiedByDefault="false"
                     android:queryBackground="@android:color/transparent"
                     android:queryHint="Search Address"
+
                     android:theme="@style/searchViewStyle"
                     app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
@@ -146,7 +147,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_light_rounded">
+                        android:background="@drawable/bg_light_rounded"
+                        android:textColorHint="@color/grey_text_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtAddress"
@@ -163,7 +165,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_light_rounded">
+                        android:background="@drawable/bg_light_rounded"
+                        android:textColorHint="@color/grey_text_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtTitle"
@@ -179,7 +182,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_light_rounded">
+                        android:background="@drawable/bg_light_rounded"
+                        android:textColorHint="@color/grey_text_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtDescription"
@@ -205,8 +209,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:max="15"
+                        android:background="@null"
+                        android:progressBackgroundTint="@color/black"
                         android:progressTint="@color/blue_main"
-                        android:thumbTint="@color/blue_main" />
+                        android:colorControlActivated="@color/blue_main"
+                        android:thumbTint="@drawable/thumb" />
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/checkboxSound"

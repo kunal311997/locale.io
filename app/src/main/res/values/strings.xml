@@ -51,4 +51,5 @@
     <string name="change_sound_mode_to">Change device\'s sound mode to</string>
     <string name="save">Save</string>
     <string name="do_you_want_to_toggle_change_sound_mode">Do you want to toggle/change sound mode?</string>
+    <string name="show_distance_difference_notification">Show distance difference notification</string>
 </resources>

@@ -25,6 +25,8 @@ class HomeViewModel @Inject constructor(
     fun isWalkThroughCompleted() = repository.isWalkThroughCompleted()
     fun setUpdateTime(updateTime: Int) = repository.setUpdateTime(updateTime)
     fun getUpdateTime(): Int = repository.getUpdateTime()
+    fun showNotificationDiff(isVisible: Boolean) = repository.showNotificationDiff(isVisible)
+    fun isShowNotificationDiff(): Boolean = repository.isShowNotificationDiff()
     fun fetchAddedTasks() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

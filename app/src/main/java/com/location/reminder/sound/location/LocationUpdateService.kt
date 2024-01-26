@@ -10,8 +10,10 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleService
 import com.location.reminder.sound.R
+import com.location.reminder.sound.domain.viewmodels.HomeViewModel
 import com.location.reminder.sound.model.SoundMode
 import com.location.reminder.sound.model.Task
 import com.location.reminder.sound.util.checkSoundMode
@@ -20,6 +22,7 @@ import com.location.reminder.sound.util.evaluateDistance
 import com.location.reminder.sound.util.toggleSoundMode
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import androidx.fragment.app.viewModels
 
 @AndroidEntryPoint
 class LocationUpdateService : LifecycleService() {

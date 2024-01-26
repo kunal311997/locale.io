@@ -53,6 +53,9 @@ class SettingsFragment : Fragment() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+        binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+            viewModel.showNotificationDiff(b)
+        }
     }
 
 }

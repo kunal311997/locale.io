@@ -32,13 +32,22 @@ class SharedPrefClient @Inject constructor(val context: Context) {
 
     private val KEY_UPDATE_TIME = "updateTime"
 
-    fun getUpdateTime(): Int {
-        return sharedPreferences.getInt(KEY_UPDATE_TIME, 15)
-    }
+    fun getUpdateTime(): Int = sharedPreferences.getInt(KEY_UPDATE_TIME, 15)
 
     fun setUpdateTime(updateTime: Int) {
         sharedPreferences.edit(commit = true) {
             putInt(KEY_UPDATE_TIME, updateTime)
+        }
+    }
+
+    private val KEY_SHOW_NOTIFICATION_DIFF = "showNotificationDiff"
+
+    fun isShowNotificationDiff(): Boolean =
+        sharedPreferences.getBoolean(KEY_SHOW_NOTIFICATION_DIFF, true)
+
+    fun showNotificationDiff(isVisible: Boolean) {
+        sharedPreferences.edit(commit = true) {
+            putBoolean(KEY_SHOW_NOTIFICATION_DIFF, isVisible)
         }
     }
 

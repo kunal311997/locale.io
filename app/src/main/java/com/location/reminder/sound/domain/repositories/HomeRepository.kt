@@ -7,6 +7,8 @@ interface HomeRepository {
     fun isWalkThroughCompleted(): Boolean
     fun setUpdateTime(updateTime: Int)
     fun getUpdateTime(): Int
+    fun showNotificationDiff(isVisible: Boolean)
+    fun isShowNotificationDiff(): Boolean
     suspend fun saveTask(task: Task)
     fun deleteTask(task: Task)
     fun updateTask(task: Task): Int

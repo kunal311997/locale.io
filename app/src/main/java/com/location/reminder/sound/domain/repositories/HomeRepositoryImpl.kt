@@ -12,6 +12,10 @@ class HomeRepositoryImpl @Inject constructor(
     override fun isWalkThroughCompleted() = sharedPrefClient.isWalkThroughCompleted()
     override fun setUpdateTime(updateTime: Int) = sharedPrefClient.setUpdateTime(updateTime)
     override fun getUpdateTime(): Int = sharedPrefClient.getUpdateTime()
+    override fun showNotificationDiff(isVisible: Boolean) =
+        sharedPrefClient.showNotificationDiff(isVisible)
+
+    override fun isShowNotificationDiff(): Boolean = sharedPrefClient.isShowNotificationDiff()
     override suspend fun saveTask(task: Task) = database.insert(task)
     override fun deleteTask(task: Task) = database.delete(task)
     override fun updateTask(task: Task): Int = database.update(task)

@@ -52,13 +52,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:max="5"
-
         android:progressTint="@color/blue_main"
         android:thumbTint="@color/blue_main" />
+
     <CheckBox
-         style="@style/bodyLightMedium"
+        style="@style/bodyLightMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Show distance diff notification" />
+        android:id="@+id/checkBox"
+        android:buttonTint="@color/blue_main"
+        android:text="@string/show_distance_difference_notification" />
 </androidx.appcompat.widget.LinearLayoutCompat>
